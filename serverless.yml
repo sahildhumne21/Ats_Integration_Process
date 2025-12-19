@@ -1,0 +1,35 @@
+service: ats-integration
+
+provider:
+  name: aws
+  runtime: python3.10
+  stage: dev
+  region: ap-south-1
+
+functions:
+  getJobs:
+    handler: src.handlers.jobs.get_jobs
+    events:
+      - http:
+          path: jobs
+          method: get
+          cors: true
+
+  createCandidate:
+    handler: src.handlers.candidates.create_candidate
+    events:
+      - http:
+          path: candidates
+          method: post
+          cors: true
+
+  getApplications:
+    handler: src.handlers.applications.get_applications
+    events:
+      - http:
+          path: applications
+          method: get
+          cors: true
+
+plugins:
+  - serverless-offline
